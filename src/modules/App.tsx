@@ -1,20 +1,24 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { Home } from '../pages/Home/Home';
-import { path } from './const/path';
-import { Error } from '../pages/Home/Error';
+import { paths } from '../const/paths';
+import { Layout } from './Layout';
+import { Error } from './Error';
+import { Beers } from './Beers/components/Beers';
+import { Home } from './Home/components/Home';
+import { Beer } from './Beers/components/Beer';
 
-const appRouter = createBrowserRouter([
-  {
-    path: path.home,
-    element: <Home />,
-    errorElement: <Error />,
-  },
-]);
-
-function App() {
-  return <RouterProvider router={appRouter} />;
-}
-
-export default App;
+export const App = () => {
+  return (
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path={paths.home} element={<Home />} errorElement={<Error />} />
+          <Route path={paths.recipes} element={<Beers />} errorElement={<Error />} />
+          <Route path={`${paths.recipes}/${paths.recipeId}`} element={<Beer />} errorElement={<Error />} />
+          <Route path={paths.error} element={<Error />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  );
+};
